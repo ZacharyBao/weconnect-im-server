@@ -43,10 +43,10 @@ public class TestCase {
         MessageEntity messageEntity = new MessageEntity();
         messageEntity.setmSenderId("11111111");
         messageEntity.setmReceiverId("2222222");
-        messageEntity.setmMsgText("djakdjakjkfjkajfkajkfja");
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-        Date date =new Date();
-        String sendtime=sdf.format(date);
+        messageEntity.setmMsgText("okok");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+        Date date = new Date();
+        String sendtime = sdf.format(date);
         messageEntity.setmSendTime(sendtime);
         //保存对象进数据库
         messageEntity.setmMsgText("dfefwfwfwfnv");

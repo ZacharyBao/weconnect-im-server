@@ -21,26 +21,26 @@ public class WeServer {
     public static void main(String[] args) throws Exception {
 
         // 实例化一个hashmap,用于保存所有的在线的User，相当于在线列表
-        HashMap<String,User> onlineUser=new HashMap<>();
+        HashMap<String, User> onlineUser = new HashMap<>();
         //离线缓存，用来存储由于离线而未能接收到消息的用户id
-        HashMap<String,String> offlineUserIdMap;
+        HashMap<String, String> offlineUserIdMap;
         //存放所有数据库中群组的信息
-        HashMap<String,List<String>> allGroupInfo;
+        HashMap<String, List<String>> allGroupInfo;
         //创建redisHelper对象
-        RedisHelper redisHelper=new RedisHelper();
+        RedisHelper redisHelper = new RedisHelper();
 
         //加载群组信息
-        DbHelper dbHelper=new DbHelper();
-        allGroupInfo=dbHelper.getAllGroupInfoTwo();
+        DbHelper dbHelper = new DbHelper();
+        allGroupInfo = dbHelper.getAllGroupInfoTwo();
         dbHelper.weClear();
 
         //获取有离线消息的用户Id的map是否存在
-        Jedis jedis=redisHelper.initializeJedis();
-        offlineUserIdMap=redisHelper.getOfflineUserIdMapFromRedis(jedis);
-        if(offlineUserIdMap==null){
-            offlineUserIdMap=new HashMap<>();
-            redisHelper.saveOfflineUserIdMapInRedis(offlineUserIdMap,jedis);
-        }else{
+        Jedis jedis = redisHelper.initializeJedis();
+        offlineUserIdMap = redisHelper.getOfflineUserIdMapFromRedis(jedis);
+        if (offlineUserIdMap == null) {
+            offlineUserIdMap = new HashMap<>();
+            redisHelper.saveOfflineUserIdMapInRedis(offlineUserIdMap, jedis);
+        } else {
             //什么都不做
         }
         redisHelper.closeJedis(jedis);
@@ -56,9 +56,9 @@ public class WeServer {
             User user = new User(socket);
             System.out.println(user.getName() + "正在登录。。。");
             //list.add(user);
-            onlineUser.put(user.getName(),user);
+            onlineUser.put(user.getName(), user);
             // 创建一个新的线程，接收信息并转发
-            ServerThread thread = new ServerThread(user, onlineUser,allGroupInfo,redisHelper);
+            ServerThread thread = new ServerThread(user, onlineUser, allGroupInfo, redisHelper);
             thread.start();
         }
     }
